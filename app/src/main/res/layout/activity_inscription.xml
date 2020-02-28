@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".MainActivity">
+    tools:context=".InscriptionActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -57,6 +57,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/textViewLogin"
         android:padding="16dp"
         android:layout_margin="16dp"
         android:layout_below="@+id/linearLayout"

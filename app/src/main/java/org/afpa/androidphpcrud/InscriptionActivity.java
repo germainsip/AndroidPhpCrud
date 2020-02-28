@@ -1,6 +1,8 @@
 package org.afpa.androidphpcrud;
 
+import android.content.Intent;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -12,14 +14,14 @@ import android.widget.TextView;
 
 import com.android.volley.*;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class InscriptionActivity extends AppCompatActivity implements View.OnClickListener {
     // les champs
     private EditText editTextUserName, editTextEmail, editTextPassword;
     // le bouton
@@ -30,17 +32,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_inscription);
 
         editTextEmail = (EditText) findViewById(R.id.editTextUserEmail);
         editTextUserName = (EditText) findViewById(R.id.editTextUserName);
         editTextPassword = (EditText) findViewById(R.id.editTextUserPassword);
-
+        textviewLogin = (TextView) findViewById(R.id.textViewLogin);
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
 
         progressDialog = new ProgressDialog(this);
 
         buttonRegister.setOnClickListener(this);
+        textviewLogin.setOnClickListener(this);
 
     }
 
@@ -84,12 +87,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return params;
             }
         };
-       RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
     }
 
     @Override
     public void onClick(View v) {
         if (v == buttonRegister)
             registerUser();
+        if (v == textviewLogin)
+            startActivity(new Intent(this,LoginActivity.class));
     }
 }
