@@ -27,7 +27,7 @@ public class InscriptionActivity extends AppCompatActivity implements View.OnCli
     // le bouton
     private Button buttonRegister;
     private ProgressDialog progressDialog;
-    private TextView textviewLogin;
+    private TextView textViewLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +37,13 @@ public class InscriptionActivity extends AppCompatActivity implements View.OnCli
         editTextEmail = (EditText) findViewById(R.id.editTextUserEmail);
         editTextUserName = (EditText) findViewById(R.id.editTextUserName);
         editTextPassword = (EditText) findViewById(R.id.editTextUserPassword);
-        textviewLogin = (TextView) findViewById(R.id.textViewLogin);
+        textViewLogin = (TextView) findViewById(R.id.textViewLogin);
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
 
         progressDialog = new ProgressDialog(this);
 
         buttonRegister.setOnClickListener(this);
-        textviewLogin.setOnClickListener(this);
+        textViewLogin.setOnClickListener(this);
 
     }
 
@@ -94,7 +94,7 @@ public class InscriptionActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         if (v == buttonRegister)
             registerUser();
-        if (v == textviewLogin)
+        if (v == textViewLogin)
             startActivity(new Intent(this,LoginActivity.class));
     }
 }
