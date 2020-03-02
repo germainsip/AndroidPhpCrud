@@ -44,5 +44,31 @@ public class SharedPrefManager {
         return true;
    }
 
+   public boolean isLoggedIn() {
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        if(sharedPreferences.getString(KEY_USERNAME, null) != null){
+            return true;
+        }
+        return false;
+   }
+
+   public boolean logout(){
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor =sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+        return true;
+   }
+
+   public String getUsername(){
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_USERNAME, null);
+   }
+
+    public String getUserEmail(){
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_USER_MAIL, null);
+    }
+
 
 }
