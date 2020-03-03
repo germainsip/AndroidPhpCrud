@@ -3,7 +3,9 @@ package org.afpa.androidphpcrud;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -20,7 +22,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextUserName, getEditTextPassword;
     private Button buttonLogin;
@@ -31,13 +33,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        editTextUserName = (EditText) findViewById(R.id.editTextUserEmail);
+        editTextUserName = (EditText) findViewById(R.id.editTextUserName);
         getEditTextPassword = (EditText) findViewById(R.id.editTextUserPassword);
-        buttonLogin = (Button) findViewById(R.id.loginButton);
+        buttonLogin = (Button) findViewById(R.id.buttonLogin);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Patientez...");
-
+        buttonLogin.setOnClickListener(this);
     }
 
     private void userLogin() {
@@ -52,8 +54,14 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject obj = new JSONObject(response);
-                            if (!obj.getBoolean("error")){
-
+                            if (!obj.getBoolean("error")) {
+                                SharedPrefManager.getInstance(getApplicationContext())
+                                        .userLogin(
+                                                obj.getInt("id"),
+                                                obj.getString("username"),
+                                                obj.getString("email")
+                                        );
+                                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -67,16 +75,21 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 }
-        ){
+        ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-                params.put("username",username);
-                params.put("password",password);
+                Map<String, String> params = new HashMap<>();
+                params.put("username", username);
+                params.put("password", password);
                 return params;
             }
         };
 
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    @Override
+    public void onClick(View v) {
+        userLogin();
     }
 }
